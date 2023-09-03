@@ -110,7 +110,29 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  {
+    'folke/which-key.nvim',
+    opts = {},
+    config = function()
+      local wk = require('which-key')
+      wk.register({
+        b = {
+          name = "Buffers",
+        },
+        s = {
+          name = "Search"
+        },
+        g = {
+          name = "Comments",
+          cc = { "Toggles current line using linewise comment", mode = "n" },
+          bc = { "Toggles current line using blockwise comment" },
+          c = { "Toggles region using linewise comment", mode = "v" },
+          b = { "Toggles region using blockwise comment", mode = "v" },
+        },
+
+      }, { prefix = "<leader>" })
+    end,
+  },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -131,16 +153,99 @@ require('lazy').setup({
       end,
     },
   },
+  {
+    'olivercederborg/poimandres.nvim',
+    config = function()
+      require('poimandres').setup {
+        -- vim.cmd.colorscheme 'poimandres'
+      }
+    end,
+  },
+  {
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      -- vim.cmd.colorscheme 'onedark'
+    end,
+  },
+  {
+    'EdenEast/nightfox.nvim',
+    config = function()
+      require('nightfox').setup {
+        terminal_colurs = true,
+        styles = {
+          comments = 'italic',
+          keywords = 'bold',
+          types = 'italic,bold'
+        }
 
-  --{
-  -- Theme inspired by Atom
-  --  'navarasu/onedark.nvim',
-  --  priority = 1000,
-  --  config = function()
-  --    vim.cmd.colorscheme 'onedark'
-  --  end,
-  --},
+      }
+      -- vim.cmd.colorscheme 'duskfox'
+      -- vim.cmd.colorscheme 'carbonfox'
+    end,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    config = function()
+      require('kanagawa').setup {
+        terminal_colurs = true,
+        styles = {
+          comments = 'italic',
+          keywords = 'bold',
+          types = 'italic,bold'
+        },
+        -- wave | dragon | lotus
+        theme = "wave",
+      }
+      -- vim.cmd.colorscheme 'kanagawa'
+      -- vim.cmd.colorscheme 'carbonfox'
+    end,
+  },
+  {
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {
+      -- storm | moon | night | day
+      style = "night",
+      terminal_colurs = true,
+      comments = { italic = true },
+      keywords = { bold = true },
 
+    },
+    config = function()
+      -- vim.cmd.colorscheme 'tokyonight'
+    end
+  },
+  {
+    "catppuccin/nvim",
+    priority = 1000,
+    config = function()
+      require('catppuccin').setup {
+        flavour = "mocha",
+        integrations = {
+          neotree = true,
+        },
+        styles = {
+          comments = { "italic" },
+          keywords = { "bold" },
+          types = { "italic", "bold" }
+        },
+        compile_path = vim.fn.stdpath "cache" .. "../catppuccin"
+      }
+      vim.cmd.colorscheme "catppuccin"
+    end
+  },
+  {
+    "nyoom-engineering/oxocarbon.nvim",
+    -- Add in any other configuration;
+    --   event = foo,
+    --   config = bar
+    --   end,
+    config = function()
+      -- vim.cmd.colorscheme("oxocarbon")
+    end
+  },
   {
     -- Set lualine as statusline
     'nvim-lualine/lualine.nvim',
@@ -148,11 +253,15 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = false,
-        theme = 'onedark',
         component_separators = '|',
         section_separators = '',
       },
     },
+    config = function()
+      require("lualine").setup {
+        --  theme = "catppuccin",
+      }
+    end
   },
 
   {
@@ -167,7 +276,7 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
+  { 'numToStr/Comment.nvim',  opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
   {
@@ -213,7 +322,6 @@ require('lazy').setup({
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   { import = 'custom.plugins' },
 }, {})
-
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -306,11 +414,33 @@ vim.keymap.set('n', '<leader>/', function()
   })
 end, { desc = '[/] Fuzzily search in current buffer' })
 
-vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+-- Netrw keymaps
+-- vim.keymap.set('n', '<leader>pe', ':Vexplore<Enter>')
+
+-- Neotree setup
+local neotree = require('neo-tree')
+neotree.setup({
+  filesystem = {
+    follow_current_file = {
+      enabled = true
+    },
+    filtered_items = {
+      visible = false,
+      show_hidden_count = true,
+      hide_dotfiles = false,
+      hide_gitignored = false,
+      hide_hidden = false,
+    }
+  }
+})
+
+vim.keymap.set('n', '<C-b>', ':Neotree filesystem reveal right toggle<Enter>')
+
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').git_files, { desc = '[S]earch [G]it Files' })
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep, { desc = '[Search by [G]rep [P]attern' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
@@ -387,6 +517,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
+
+
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
@@ -430,6 +562,8 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
     vim.lsp.buf.format()
   end, { desc = 'Format current buffer with LSP' })
+
+  vim.cmd [[autocmd BufWritePre <buffer> lua vim.lsp.buf.format()]]
 end
 
 -- Enable the following language servers
@@ -481,6 +615,7 @@ mason_lspconfig.setup_handlers {
   end
 }
 
+
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
@@ -528,6 +663,16 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+-- open file at last line
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+  pattern = { "*" },
+  callback = function()
+    if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+      vim.api.nvim_exec("normal! g'\"", false)
+    end
+  end
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
