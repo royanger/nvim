@@ -4,39 +4,15 @@
 ==================== READ THIS BEFORE CONTINUING ====================
 =====================================================================
 
-Kickstart.nvim is *not* a distribution.
-
-Kickstart.nvim is a template for your own configuration.
-  The goal is that you can read every line of code, top-to-bottom, understand
-  what your configuration is doing, and modify it to suit your needs.
-
-  Once you've done that, you should start exploring, configuring and tinkering to
-  explore Neovim!
-
   If you don't know anything about Lua, I recommend taking some time to read through
   a guide. One possible example:
   - https://learnxinyminutes.com/docs/lua/
 
-
   And then you can explore or search through `:help lua-guide`
   - https://neovim.io/doc/user/lua-guide.html
 
-
-Kickstart Guide:
-
-I have left several `:help X` comments throughout the init.lua
-You should run that command and read that help section for more information.
-
-In addition, I have some `NOTE:` items throughout the file.
-These are for you, the reader to help understand what is happening. Feel free to delete
-them once you know what you're doing, but they should serve as a guide for when you
-are first encountering a few different constructs in your nvim config.
-
-I hope you enjoy your Neovim journey,
-- TJ
-
-P.S. You can delete this when you're done too. It's your config now :)
 --]]
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -59,13 +35,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- NOTE: Here is where you install your plugins.
---  You can configure plugins using the `config` key.
---
---  You can also configure plugins after the setup call,
---    as they will be available in your neovim runtime.
 require('lazy').setup({
-  -- NOTE: First, some plugins that don't require any configuration
 
   -- Git related plugins
   'tpope/vim-fugitive',
@@ -74,8 +44,6 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
-  -- NOTE: This is where your plugins related to LSP can be installed.
-  --  The configuration is done below. Search for lspconfig to find it below.
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -109,7 +77,7 @@ require('lazy').setup({
     },
   },
 
-  -- Useful plugin to show you pending keybinds.
+  -- Which Key and custom labelling
   {
     'folke/which-key.nvim',
     opts = {},
@@ -119,17 +87,42 @@ require('lazy').setup({
         b = {
           name = "Buffers",
         },
-        s = {
-          name = "Search"
+        h = {
+          name = "Harpoon",
+          m = "Harpoon [M]odal",
+          a = "[A]dd current file",
+          r = "[R]emove current file",
+          h = "Move to  next mark",
+          l = "Move to previous mark",
+          ["1"] = "Move to mark [1]",
+          ["2"] = "Move to mark [2]",
+          ["3"] = "Move to mark [3]",
+          ["4"] = "Move to mark [4]",
+          ["5"] = "Move to mark [5]",
+          ["6"] = "Move to mark [6]",
         },
         g = {
-          name = "Comments",
+          name = "Comments and Definitions/References",
           cc = { "Toggles current line using linewise comment", mode = "n" },
           bc = { "Toggles current line using blockwise comment" },
           c = { "Toggles region using linewise comment", mode = "v" },
           b = { "Toggles region using blockwise comment", mode = "v" },
+          d = { "Go to [D]efinition" },
+          r = { "Go to [R]eferences" },
+          I = { "Go to [I]mplementation" },
+          D = { "Go to type [D]efintion" }
         },
-
+        s = {
+          name = "Search"
+        },
+        t = {
+          name = "Trouble",
+          t = { "Open [T]rouble" },
+          w = { "Open workspace [D]iagnostics" },
+          d = { "Open document [D]iagnostics" },
+          q = { "Trouble [Q]uickfix" },
+          l = { "Trouble loclist" }
+        }
       }, { prefix = "<leader>" })
     end,
   },
@@ -153,6 +146,8 @@ require('lazy').setup({
       end,
     },
   },
+
+  -- themes
   {
     'olivercederborg/poimandres.nvim',
     config = function()
@@ -233,17 +228,19 @@ require('lazy').setup({
         },
         compile_path = vim.fn.stdpath "cache" .. "../catppuccin"
       }
-      vim.cmd.colorscheme "catppuccin"
+      --vim.cmd.colorscheme "catppuccin"
     end
   },
   {
     "nyoom-engineering/oxocarbon.nvim",
-    -- Add in any other configuration;
-    --   event = foo,
-    --   config = bar
-    --   end,
     config = function()
       -- vim.cmd.colorscheme("oxocarbon")
+    end
+  },
+  {
+    "fenetikm/falcon",
+    config = function()
+      vim.cmd.colorscheme("falcon")
     end
   },
   {
@@ -259,7 +256,7 @@ require('lazy').setup({
     },
     config = function()
       require("lualine").setup {
-        --  theme = "catppuccin",
+        -- theme = "catppuccin",
       }
     end
   },
@@ -314,12 +311,7 @@ require('lazy').setup({
   require 'kickstart.plugins.autoformat',
   -- require 'kickstart.plugins.debug',
 
-  -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
-  --    You can use this folder to prevent any conflicts with this init.lua if you're interested in keeping
-  --    up-to-date with whatever is in the kickstart repo.
-  --    Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
-  --
-  --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
+  -- directory for addition, custom plugins
   { import = 'custom.plugins' },
 }, {})
 -- [[ Setting options ]]
@@ -403,10 +395,13 @@ require('telescope').setup {
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
+-- Enable harpoon telescope support
+pcall(require("telescope").load_extension("harpoon"))
+
 -- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+vim.keymap.set('n', '<leader>s?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader>s<space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>s/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
@@ -417,7 +412,7 @@ end, { desc = '[/] Fuzzily search in current buffer' })
 -- Netrw keymaps
 -- vim.keymap.set('n', '<leader>pe', ':Vexplore<Enter>')
 
--- Neotree setup
+-- Neotree config
 local neotree = require('neo-tree')
 neotree.setup({
   filesystem = {
@@ -440,7 +435,7 @@ vim.keymap.set('n', '<leader>sg', require('telescope.builtin').git_files, { desc
 vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep, { desc = '[Search by [G]rep [P]attern' })
+vim.keymap.set('n', '<leader>sp', require('telescope.builtin').live_grep, { desc = '[S]earch by Grep [P]attern' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
 -- [[ Configure Treesitter ]]
@@ -542,7 +537,7 @@ local on_attach = function(_, bufnr)
   nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
   nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
   nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>D', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>gD', vim.lsp.buf.type_definition, 'Type [D]efinition')
   nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
   nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 

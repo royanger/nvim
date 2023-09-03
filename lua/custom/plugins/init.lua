@@ -30,9 +30,47 @@ vim.keymap.set('n', '<leader>b8', '<Cmd>BufferGoto 8<CR>', { desc = 'Go to buffe
 vim.keymap.set('n', '<leader>b9', '<Cmd>BufferGoto 9<CR>', { desc = 'Go to buffer 9' })
 
 
-vim.keymap.set('n', '<leader>gf', '', { desc = 'Search [G]it [F]iles' })
+--vim.keymap.set('n', '<leader>gf', '', { desc = 'Search [G]it [F]iles' })
+
+-- create search for current word/selection
+vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+  { desc = "[S]earch & [R]eplace selection" })
+
+-- run prettier on current file
+vim.keymap.set("n", "<Leader>pp", ":lua vim.lsp.buf.format()<CR>")
+
+-- next with 'n' and prev with 'N' on regex searches
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
+-- Trouble
+vim.keymap.set("n", "<leader>tt", function() require("trouble").open() end)
+vim.keymap.set("n", "<leader>tw", function() require("trouble").open("workspace_diagnostics") end)
+vim.keymap.set("n", "<leader>td", function() require("trouble").open("document_diagnostics") end)
+vim.keymap.set("n", "<leader>tq", function() require("trouble").open("quickfix") end)
+vim.keymap.set("n", "<leader>tl", function() require("trouble").open("loclist") end)
+vim.keymap.set("n", "gR", function() require("trouble").open("lsp_references") end)
+
+-- keep cursor in the middle while moving up and down
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+
+-- setup Harppon keymaps
+vim.keymap.set("n", "<leader>ha", function() require("harpoon.mark").add_file() end)
+vim.keymap.set("n", "<leader>hr", function() require("harpoon.mark").rm_file() end)
+
+vim.keymap.set("n", "<leader>hm", function() require("harpoon.ui").toggle_quick_menu() end)
+
+vim.keymap.set("n", "<leader>hh", function() require("harpoon.ui").nav_next() end)
+vim.keymap.set("n", "<leader>hl", function() require("harpoon.ui").nev_prev() end)
+
+vim.keymap.set("n", "<leader>h1", function() require("harpoon.ui").nav_file(1) end)
+vim.keymap.set("n", "<leader>h2", function() require("harpoon.ui").nav_file(2) end)
+vim.keymap.set("n", "<leader>h3", function() require("harpoon.ui").nav_file(3) end)
+vim.keymap.set("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) end)
+vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(5) end)
+vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(6) end)
 
 return {
-
 
 }
