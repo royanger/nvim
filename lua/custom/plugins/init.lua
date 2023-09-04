@@ -3,15 +3,15 @@
 --
 -- See the kickstart.nvim README for more information
 
--- Esc to 'jk' for Visual and Isnert mode
+--[[ Map 'jk' to ESC in Visual and Insert mode ]]
 vim.keymap.set("i", "jk", "<ESC>", { desc = "Esc while in Insert mode" })
 vim.keymap.set("x", "jk", "<ESC>", { desc = "Esc while in Visual mode" })
 
--- Move selected line / block of text in visual mode
+--[[ Move selecttion when in Visual mode ]]
 vim.keymap.set("x", "K", ":move '<-2<CR>gv-gv", { desc = "Move selection up" })
 vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move section ddown" })
 
--- move to the left or right buffer and close current buffer
+--[[ Buffer related keymaps ]]
 vim.keymap.set('n', '<leader>bh', '<Cmd>BufferPrevious<CR>,', { desc = 'Go to previous buffer' })
 vim.keymap.set('n', '<leader>bl', '<Cmd>BufferNext<CR>,', { desc = 'Go to next buffer' })
 vim.keymap.set('n', '<leader>bc', '<Cmd>BufferClose<CR>,', { desc = 'Close buffer' })
@@ -29,21 +29,18 @@ vim.keymap.set('n', '<leader>b7', '<Cmd>BufferGoto 7<CR>', { desc = 'Go to buffe
 vim.keymap.set('n', '<leader>b8', '<Cmd>BufferGoto 8<CR>', { desc = 'Go to buffer 8' })
 vim.keymap.set('n', '<leader>b9', '<Cmd>BufferGoto 9<CR>', { desc = 'Go to buffer 9' })
 
-
---vim.keymap.set('n', '<leader>gf', '', { desc = 'Search [G]it [F]iles' })
-
--- create search for current word/selection
+--[[ Search and Replace oncurrent word ]]
 vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
   { desc = "[S]earch & [R]eplace selection" })
 
--- run prettier on current file
+--[[ Format the current buffer ]]
 vim.keymap.set("n", "<Leader>pp", ":lua vim.lsp.buf.format()<CR>")
 
--- next with 'n' and prev with 'N' on regex searches
+--[[ Keerp search result at center of the screen ]]
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- Trouble
+--[[ Trouble keymaps ]]
 vim.keymap.set("n", "<leader>tt", function() require("trouble").open() end)
 vim.keymap.set("n", "<leader>tw", function() require("trouble").open("workspace_diagnostics") end)
 vim.keymap.set("n", "<leader>td", function() require("trouble").open("document_diagnostics") end)
@@ -51,11 +48,11 @@ vim.keymap.set("n", "<leader>tq", function() require("trouble").open("quickfix")
 vim.keymap.set("n", "<leader>tl", function() require("trouble").open("loclist") end)
 vim.keymap.set("n", "gR", function() require("trouble").open("lsp_references") end)
 
--- keep cursor in the middle while moving up and down
+--[[ Keep cursor in the middle of the screen ]]
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 
--- setup Harppon keymaps
+--[[ Harpoon keymaps ]]
 vim.keymap.set("n", "<leader>ha", function() require("harpoon.mark").add_file() end)
 vim.keymap.set("n", "<leader>hr", function() require("harpoon.mark").rm_file() end)
 
