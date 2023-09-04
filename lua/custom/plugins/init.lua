@@ -71,6 +71,9 @@ vim.keymap.set("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) e
 vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(5) end)
 vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(6) end)
 
+--[[ Git DiffView keymaps]]
+vim.keymap.set('n', '<leader>gv', '<Cmd>DiffviewOpen<CR>')
+
 return {
 
 }

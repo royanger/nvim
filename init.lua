@@ -87,6 +87,10 @@ require('lazy').setup({
         b = {
           name = "Buffers",
         },
+        g = {
+          name = "Git",
+          v = "Open GitDiff[V]iew",
+        },
         h = {
           name = "Harpoon",
           m = "Harpoon [M]odal",
