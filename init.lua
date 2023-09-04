@@ -89,6 +89,7 @@ require('lazy').setup({
         },
         g = {
           name = "Git",
+          l = "Open [L]azyGit",
           v = "Open GitDiff[V]iew",
         },
         h = {
