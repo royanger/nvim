@@ -71,6 +71,14 @@ vim.keymap.set("n", "<leader>h4", function() require("harpoon.ui").nav_file(4) e
 vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(5) end)
 vim.keymap.set("n", "<leader>h5", function() require("harpoon.ui").nav_file(6) end)
 
+--[[ Git Fugitive Telescope bindings ]]
+vim.keymap.set('n', "<leader>gb", "<Cmd>Telescope git_banches<CR>")
+vim.keymap.set('n', "<leader>gs", "<Cmd>Telescope git_status<CR>")
+vim.keymap.set('n', "<leader>gd", "<Cmd>Telescope git_bcommits<CR>")
+vim.keymap.set('n', "<leader>gc", "<Cmd>Telescope git_commits<CR>")
+vim.keymap.set('n', "<leader>gf", "<Cmd>Telescope git_files<CR>")
+vim.keymap.set('n', "<leader>gt", "<Cmd>Telescope git_stash<CR>")
+
 --[[ Lazygit keymaps ]]
 vim.keymap.set('n', '<leader>gl', '<Cmd>LazyGit<CR>')
 

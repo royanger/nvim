@@ -87,8 +87,19 @@ require('lazy').setup({
         b = {
           name = "Buffers",
         },
+        c = {
+          name = "Comments",
+          c = { "Toggles linewise comment" },
+          b = { "Toggles blockwaie comment" },
+        },
         g = {
           name = "Git",
+          f = "[G]it [F]iles",
+          b = "[G]it [B]ranches",
+          c = "[G]it [C]ommits",
+          i = "[G]it [S]tatus",
+          d = "[G]it [D]iff for the buffer",
+          s = "[G]it S[T]ash",
           l = "Open [L]azyGit",
           v = "Open GitDiff[V]iew",
         },
@@ -106,28 +117,26 @@ require('lazy').setup({
           ["5"] = "Move to mark [5]",
           ["6"] = "Move to mark [6]",
         },
-        g = {
-          name = "Comments and Definitions/References",
-          cc = { "Toggles current line using linewise comment", mode = "n" },
-          bc = { "Toggles current line using blockwise comment" },
-          c = { "Toggles region using linewise comment", mode = "v" },
-          b = { "Toggles region using blockwise comment", mode = "v" },
-          d = { "Go to [D]efinition" },
-          r = { "Go to [R]eferences" },
-          I = { "Go to [I]mplementation" },
-          D = { "Go to type [D]efintion" }
-        },
         s = {
           name = "Search"
         },
         t = {
           name = "Trouble",
-          t = { "Open [T]rouble" },
-          w = { "Open workspace [D]iagnostics" },
-          d = { "Open document [D]iagnostics" },
-          q = { "Trouble [Q]uickfix" },
-          l = { "Trouble loclist" }
-        }
+          t = "Open [T]rouble",
+          w = "Open workspace [D]iagnostics",
+          d = "Open document [D]iagnostics",
+          q = "Trouble [Q]uickfix",
+          l = "Trouble [L]oclist",
+        },
+        v = {
+          name = "View Defs/Refs",
+          d = "[V]iew [D]efintion",
+          r = "[V]iew [R]eferences",
+          I = "[V]iew [I]mplementation",
+          D = "[V]iew Type [D]efinition",
+          s = "[V]iew Document [S]umbols",
+          w = "[V]iew [W]orkspace Symbols",
+        },
       }, { prefix = "<leader>" })
     end,
   },
@@ -278,8 +287,19 @@ require('lazy').setup({
   },
 
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim',  opts = {} },
-
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+      toggler = {
+        line = '<leader>cc',
+        block = '<leader>cb'
+      },
+      opleader = {
+        line = '<leader>cc',
+        block = '<leader>cb'
+      }
+    }
+  },
   -- Fuzzy Finder (files, lsp, etc)
   {
     'nvim-telescope/telescope.nvim',
@@ -539,12 +559,12 @@ local on_attach = function(_, bufnr)
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
   nmap('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 
-  nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-  nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-  nmap('gI', vim.lsp.buf.implementation, '[G]oto [I]mplementation')
-  nmap('<leader>gD', vim.lsp.buf.type_definition, 'Type [D]efinition')
-  nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
-  nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
+  nmap('<leader>vd', vim.lsp.buf.definition, '[V]iew [D]efinition')
+  nmap('<leader>vr', require('telescope.builtin').lsp_references, '[V]iew [R]eferences')
+  nmap('<leader>vI', vim.lsp.buf.implementation, '[V]iew [I]mplementation')
+  nmap('<leader>vD', vim.lsp.buf.type_definition, 'Type [D]efinition')
+  nmap('<leader>vs', require('telescope.builtin').lsp_document_symbols, '[V]iew Document [S]ymbols')
+  nmap('<leader>vw', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[V]iew Workspace [S]ymbols')
 
   -- See `:help K` for why this keymap
   nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
