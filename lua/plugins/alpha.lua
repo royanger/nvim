@@ -215,7 +215,7 @@ function M.config()
   local opts = {
     layout = {
       { type = "padding", val = 4 },
-      get_header({ headers.cool, headers.panda, headers.batman }),
+      get_header({ headers.panda, headers.batman }),
       { type = "padding", val = 2 },
       buttons,
       { type = "padding", val = 2 },

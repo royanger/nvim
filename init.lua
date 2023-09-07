@@ -23,7 +23,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   -- directory for addition, custom plugins
-  import = 'custom.plugins'
+  import = 'plugins'
 }, {})
 
 
