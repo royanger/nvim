@@ -35,7 +35,7 @@ vim.keymap.set('n', '<leader>b9', '<Cmd>BufferGoto 9<CR>', { desc = 'Go to buffe
 
 --[[ Search and Replace oncurrent word ]]
 vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
-	{ desc = "[S]earch & [R]eplace selection" })
+	{ desc = "Search & Replace selection" })
 
 --[[ Format the current buffer ]]
 vim.keymap.set("n", "<Leader>pp", ":lua vim.lsp.buf.format()<CR>")

@@ -16,3 +16,4 @@ neotree.setup({
 })
 
 vim.keymap.set('n', '<C-b>', ':Neotree filesystem reveal right toggle<Enter>')
+vim.keymap.set('n', '<C-e>', ':Neotree filesystem reveal float toggle<Enter>')

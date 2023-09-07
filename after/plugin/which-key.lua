@@ -8,6 +8,9 @@ wk.register({
 		c = { "Toggles linewise comment" },
 		b = { "Toggles blockwaie comment" },
 	},
+	f = {
+		name = "Find Files/Search Files"
+	},
 	g = {
 		name = "Git",
 		f = "[G]it [F]iles",
