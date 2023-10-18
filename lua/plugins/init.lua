@@ -13,4 +13,5 @@ return {
 
   -- Which Key and custom labelling
   'folke/which-key.nvim',
+
 }

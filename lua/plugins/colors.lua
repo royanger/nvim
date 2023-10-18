@@ -5,7 +5,7 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme('adwaita')
+      -- vim.cmd.colorscheme('adwaita')
     end
   },
   {
