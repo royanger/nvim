@@ -39,7 +39,7 @@ vim.keymap.set("n", "<leader>sr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left>
 
 --[[ Format the current buffer ]]
 vim.keymap.set("n", "<Leader>pf", ":lua vim.lsp.buf.format()<CR>", { desc = "Format buffer" })
-vim.keymap.set("n", "<Leader>pp", ":silent !pnpm foramt<CR>", { desc = "pnpm format" })
+vim.keymap.set("n", "<Leader>pp", ":silent !pnpm format<CR>", { desc = "pnpm format" })
 vim.keymap.set("n", "<Leader>pn", ":silent !npm run format<BR>", { desc = "npm run format" })
 
 --[[ Keerp search result at center of the screen ]]
