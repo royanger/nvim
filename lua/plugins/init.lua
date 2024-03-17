@@ -14,4 +14,8 @@ return {
   -- Which Key and custom labelling
   'folke/which-key.nvim',
 
+  -- Check types in project
+  'dmmulroy/tsc.nvim',
+
+  "elentok/format-on-save.nvim",
 }
