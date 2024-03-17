@@ -17,5 +17,9 @@ return {
   -- Check types in project
   'dmmulroy/tsc.nvim',
 
+  -- Format on save with support for prettierd
   "elentok/format-on-save.nvim",
+
+  -- Notification window, used with tsc.nvim
+  "rcarriga/nvim-notify",
 }

@@ -48,4 +48,24 @@ M.create_gradient = function(start, finish, steps)
   return gradient
 end
 
+M.find_tsc_bin = function()
+  local node_modules_tsc_binary = vim.fn.findfile("node_modules/.bin/tsc", ".;")
+
+  if node_modules_tsc_binary ~= "" then
+    return node_modules_tsc_binary
+  end
+
+  return "tsc"
+end
+
+M.find_nearest_tsconfig = function()
+  local tsconfig = vim.fn.findfile("tsconfig.json", ".;")
+
+  if tsconfig ~= "" then
+    return tsconfig
+  end
+
+  return nil
+end
+
 return M
