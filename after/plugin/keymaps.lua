@@ -8,6 +8,10 @@ vim.keymap.set("x", "J", ":move '>+1<CR>gv-gv", { desc = "Move section ddown" })
 
 
 --[[ Buffer related keymaps ]]
+local wk = require("which-key")
+wk.add({
+  { "<leader>b", group = "[B]uffer" },
+})
 vim.keymap.set('n', '<leader>bh', '<Cmd>BufferPrevious<CR>,', { desc = 'Go to previous buffer' })
 vim.keymap.set('n', '<leader>bl', '<Cmd>BufferNext<CR>,', { desc = 'Go to next buffer' })
 vim.keymap.set('n', '<leader>bc', '<Cmd>BufferClose<CR>,', { desc = 'Close buffer' })
