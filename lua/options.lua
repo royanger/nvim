@@ -1,3 +1,4 @@
+
 -- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
@@ -43,8 +44,13 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 
-vim.o.tabstop = 2
-vim.o.shiftwidth = 2
 vim.api.smarttab = true
-vim.o.softtabstop = 2
 vim.o.expandtab = true
+vim.o.autoindent = true
+vim.o.tabstop = 2
+vim.o.softtabstop = 2
+vim.o.shiftwidth = 2
+
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
+
